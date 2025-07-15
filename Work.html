@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects - Abhijit Patil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --dark: #081b29;
+            --dark-alt: #112e42;
+            --light: #ededed;
+            --primary: #00abf0;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(8, 27, 41, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 700;
+            position: absolute;
+            left: 8%;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .navbar a {
+            font-size: 1rem;
+            color: var(--light);
+            text-decoration: none;
+            margin: 0 1.5rem;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .navbar a:hover::after,
+        .navbar a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light);
+        }
+
+        /* Work Section */
+        .work-section {
+            padding: 180px 8% 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background: var(--dark-alt);
+            border: 1px solid rgba(0, 171, 240, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .category-tab:hover, .category-tab.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .work-item {
+            background: var(--dark-alt);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0, 171, 240, 0.2);
+        }
+
+        .work-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 171, 240, 0.3);
+        }
+
+        .work-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .work-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .work-item:hover .work-image img {
+            transform: scale(1.1);
+        }
+
+        .work-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 171, 240, 0.9);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .work-content {
+            padding: 25px;
+        }
+
+        .work-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .work-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .work-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background: rgba(0, 171, 240, 0.2);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid var(--primary);
+        }
+
+        .work-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .work-links a {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .work-links a:first-child {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .work-links a:first-child:hover {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .work-links a:last-child {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .work-links a:last-child:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-alt);
+            padding: 3rem 8%;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .navbar a {
+                margin: 0 1rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .logo {
+                left: 5%;
+            }
+            
+            .section-title h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+                justify-content: flex-end;
+            }
+            
+            .logo {
+                position: static;
+                margin-right: auto;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .navbar {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--dark-alt);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transform: translateY(-150%);
+                transition: transform 0.5s ease;
+                z-index: 99;
+            }
+            
+            .navbar.active {
+                transform: translateY(0);
+            }
+            
+            .navbar a {
+                margin: 0.5rem 0;
+                padding: 0.5rem 0;
+            }
+            
+            .work-section {
+                padding: 120px 5% 80px;
+            }
+            
+            .section-title h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title p {
+                font-size: 1rem;
+            }
+            
+            .work-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+            
+            .footer-links {
+                gap: 1rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .work-section {
+                padding: 100px 5% 80px;
+            }
+            
+            .section-title h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title p {
+                font-size: 0.9rem;
+            }
+            
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .work-content h3 {
+                font-size: 1.3rem;
+            }
+
+            footer {
+                padding: 2rem 5%;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .copyright {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Centered Navigation -->
+        <header>
+            <a href="index.html" class="logo">Abhijit<span>Patil</span></a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="navbar">
+                <a href="index.html">Home</a>
+                <a href="work.html" class="active">Work</a>
+                <a href="about.html">About</a>
+                <a href="Project.html">Project</a>
+                <!-- <a href="#">Service</a> -->
+            </nav>
+        </header>
+
+        <!-- Projects Section -->
+        <section class="work-section">
+            <div class="section-title">
+                <h1>My Projects</h1>
+                <p>Explore my diverse portfolio showcasing projects built with Django, Python, WordPress, and modern frontend technologies.</p>
+            </div>
+
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">All Projects</div>
+                <div class="category-tab" data-category="django">Django</div>
+                <div class="category-tab" data-category="python">Python</div>
+                <div class="category-tab" data-category="wordpress">WordPress</div>
+                <div class="category-tab" data-category="frontend">Frontend</div>
+            </div>
+
+            <div class="work-grid">
+                <!-- Django Project 1 -->
+                <div class="work-item" data-category="django">
+                    <div class="work-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="E-commerce Website">
+                        <span class="work-category">Django</span>
+                    </div>
+                    <div class="work-content">
+                        <h3>E-commerce Platform</h3>
+                        <p>A full-featured e-commerce solution with product management, user authentication, payment integration, and admin dashboard.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Bootstrap</span>
+                        </div>
+                        <div class="work-links">
+                            <a href="#" target="_blank">Live Demo</a>
+                            <a href="#" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python Project -->
+                <div class="work-item" data-category="python">
+                    <div class="work-image">
+                        <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1136&q=80" alt="Data Analysis">
+                        <span class="work-category">Python</span>
+                    </div>
+                    <div class="work-content">
+                        <h3>Data Analysis Tool</h3>
+                        <p>A Python application for processing large datasets, generating visualizations, and exporting reports in multiple formats.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Pandas</span>
+                            <!-- <span class="tech-tag">Matplotlib</span> -->
+                            <span class="tech-tag">NumPy</span>
+                        </div>
+                        <div class="work-links">
+                            <a href="#" target="_blank">Live Demo</a>
+                            <a href="#" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WordPress Project -->
+                <div class="work-item" data-category="wordpress">
+                    <div class="work-image">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" alt="Corporate Website">
+                        <span class="work-category">WordPress</span>
+                    </div>
+                    <div class="work-content">
+                        <h3>Corporate Website</h3>
+                        <p>A custom WordPress theme with WooCommerce integration, multilingual support, and SEO optimization.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">WordPress</span>
+                            <!-- <span class="tech-tag">PHP</span> -->
+                            <span class="tech-tag">WooCommerce</span>
+                            <span class="tech-tag">Elementor</span>
+                        </div>
+                        <div class="work-links">
+                            <a href="#" target="_blank">Live Demo</a>
+                            <a href="#" target="_blank">Case Study</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frontend Project -->
+                <div class="work-item" data-category="frontend">
+                    <div class="work-image">
+                        <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Weather App">
+                        <span class="work-category">Frontend</span>
+                    </div>
+                    <div class="work-content">
+                        <h3>Weather Dashboard</h3>
+                        <p>Interactive weather application with 5-day forecast, location detection, and temperature unit conversion.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <!-- <span class="tech-tag">API Integration</span> -->
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">HTML5</span>
+                        </div>
+                        <div class="work-links">
+                            <a href="#" target="_blank">Live Demo</a>
+                            <a href="#" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Django Project 2 -->
+                <div class="work-item" data-category="django">
+                    <div class="work-image">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Blog Platform">
+                        <span class="work-category">Django</span>
+                    </div>
+                    <div class="work-content">
+                        <h3>Blog Platform</h3>
+                        <p>A content management system with rich text editing, user roles, comments, and analytics dashboard.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">Django REST</span>
+                            <!-- <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">CKEditor</span> -->
+                        </div>
+                        <div class="work-links">
+                            <a href="#" target="_blank">Live Demo</a>
+                            <a href="#" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python Project 2 -->
+                <div class="work-item" data-category="python">
+                    <div class="work-image">
+                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Automation Tool">
+                        <span class="work-category">Python</span>
+                    </div>
+                    <div class="work-content">
+                        <h3>File Management Automation</h3>
+                        <p>A Python script that automates file organization, backup, and synchronization across multiple directories.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">Python</span>
+                            <!-- <span class="tech-tag">Automation</span>
+                            <span class="tech-tag">File Handling</span> -->
+                        </div>
+                        <div class="work-links">
+                            <a href="#" target="_blank">View Documentation</a>
+                            <a href="#" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="copyright">© 2023 Abhijit Patil. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Category filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.category-tab');
+            const projects = document.querySelectorAll('.work-item');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Filter projects
+                    projects.forEach(project => {
+                        if (category === 'all' || project.getAttribute('data-category') === category) {
+                            project.style.display = 'block';
+                        } else {
+                            project.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navbar = document.querySelector('.navbar');
+            
+            menuToggle.addEventListener('click', () => {
+                navbar.classList.toggle('active');
+                menuToggle.innerHTML = navbar.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+
+            // Close menu when clicking on a link
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navbar.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
